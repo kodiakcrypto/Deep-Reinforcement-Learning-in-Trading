@@ -40,7 +40,7 @@ class TAStreamer(DataGenerator):
             raw_data = df_normalized[['ask', 'bid', 'mid', 'rsi_14', 'cci_14','dx_14','volume']].iloc[split_len:,:]
 
         for index, row in raw_data.iterrows():
-            yield row.as_matrix()
+            yield row.to_numpy()
 
 
     def _iterator_end(self):
