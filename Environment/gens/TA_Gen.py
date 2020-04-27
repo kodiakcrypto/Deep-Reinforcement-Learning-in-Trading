@@ -18,26 +18,18 @@ class TAStreamer(DataGenerator):
         df = pd.read_csv(filename)
         if "Name" in df:
             df.drop('Name',axis=1,inplace=True)
-        _stock = Sdf.retype(df.copy())
-        _stock.get('cci_14')
-        _stock.get('rsi_14')
-        _stock.get('dx_14')
-        _stock = _stock.dropna(how='any')
 
         min_max_scaler = preprocessing.MinMaxScaler((-1, 1))
-        np_scaled = min_max_scaler.fit_transform(_stock[['rsi_14', 'cci_14','dx_14','volume']])
+        np_scaled = min_max_scaler.fit_transform(df[['open', 'high','low','close','volume']])
         df_normalized = pd.DataFrame(np_scaled)
-        df_normalized.columns = ['rsi_14', 'cci_14','dx_14','volume']
-        df_normalized['bid'] = _stock['close'].values
-        df_normalized['ask'] = df_normalized['bid'] + spread
-        df_normalized['mid'] = (df_normalized['bid'] + df_normalized['ask'])/2
+        df_normalized.columns = ['open','high','low','close','volume']
 
         split_len=int(split*len(df_normalized))
 
         if(mode=='train'):
-            raw_data = df_normalized[['ask','bid','mid','rsi_14','cci_14','dx_14','volume']].iloc[:split_len,:]
+            raw_data = df_normalized[['open','high','low','close','volume']].iloc[:split_len,:]
         else:
-            raw_data = df_normalized[['ask', 'bid', 'mid', 'rsi_14', 'cci_14','dx_14','volume']].iloc[split_len:,:]
+            raw_data = df_normalized[['open','high','low','close','volume']].iloc[split_len:,:]
 
         for index, row in raw_data.iterrows():
             yield row.to_numpy()
