@@ -24,10 +24,7 @@ class TAStreamer(DataGenerator):
         _stock.get('dx_14')
         _stock = _stock.dropna(how='any')
 
-        min_max_scaler = preprocessing.MinMaxScaler((-1, 1))
-        np_scaled = min_max_scaler.fit_transform(_stock[['rsi_14', 'cci_14','dx_14','volume']])
-        df_normalized = pd.DataFrame(np_scaled)
-        df_normalized.columns = ['rsi_14', 'cci_14','dx_14','volume']
+        df_normalized = _stock[['rsi_14','cci_14','dx_14','volume']]
         df_normalized['bid'] = _stock['close'].values
         df_normalized['ask'] = df_normalized['bid'] + spread
         df_normalized['mid'] = (df_normalized['bid'] + df_normalized['ask'])/2
