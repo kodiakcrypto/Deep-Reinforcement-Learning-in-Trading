@@ -246,7 +246,7 @@ class Indicator_1(Env):
         """
         if self._first_render:
             self._f, (self._ax, self._ay, self._az, self._at) = plt.subplots(nrows=4, ncols=1, sharex=True, sharey=False, squeeze=True,
-                        gridspec_kw={'height_ratios': [4, 1, 1, 0]},)
+                        gridspec_kw={'height_ratios': [4, 1, 1, 0]}, facecolor='black',)
 
 
 
