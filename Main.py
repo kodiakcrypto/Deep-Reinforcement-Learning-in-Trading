@@ -43,7 +43,7 @@ def World(filename=None,
 
 
     try:
-        symbol = re.findall(r'Data\\([^_]+)',filename)[0]
+        symbol = re.findall(f'Data{os.sep}([^_]+)',filename)[0]
     except:
         symbol = ""
 
